@@ -1,19 +1,27 @@
 import os.log
 import UIKit
 
+@available(iOS 11.0, *)
 class ArtWorkTableViewController: UITableViewController {
 
     var artworks = [ArtWork]()
-    
+    var filteredArts = [ArtWork]()
+    let searchController = UISearchController(searchResultsController: nil)
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.leftBarButtonItem = editButtonItem
+             navigationItem.leftBarButtonItem = editButtonItem
+       
         if let savedItems = loadArt(){
             artworks += savedItems
         }
         else {
             loadSample()
         }
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -28,32 +36,39 @@ class ArtWorkTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-    
     //1
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     //2
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering() {
+            return filteredArts.count
+        }
         return artworks.count
     }
     //3
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        //let cellIdentifier = "ArtWorkTableViewCell"
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ArtWorkTableViewCell", for: indexPath) as? ArtWorkTableViewCell  else {
             fatalError("The dequeued cell is not an instance of ArtWorkTableViewCell.")
         }
+        let artwork: ArtWork
+        if isFiltering() {
+            artwork = filteredArts[indexPath.row]
+        } else {
+            artwork = artworks[indexPath.row]
+        }
+//        cell.textLabel!.text = artwork.name
+//        return cell
         
         // Fetches the appropriate meal for the data source layout.
-        let art = artworks[indexPath.row]
+        //let art = artworks[indexPath.row]
         
-        cell.nameLabel.text = art.name
-        cell.yearLabel.text = art.year
-        cell.descLabel.text = art.descriptionT
-        cell.genreLabel.text = art.genre
-        cell.imgLabel.image = art.image
+        cell.nameLabel.text = artwork.name
+        cell.yearLabel.text = artwork.year
+        cell.descLabel.text = artwork.descriptionT
+        cell.genreLabel.text = artwork.genre
+        cell.imgLabel.image = artwork.image
         return cell
     }
 
@@ -72,6 +87,9 @@ class ArtWorkTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            if isFiltering(){
+                filteredArts.remove(at: indexPath.row)
+            }
             artworks.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             saveArt()
@@ -174,5 +192,41 @@ class ArtWorkTableViewController: UITableViewController {
             fatalError("Unable to instantiate art")
         }
         artworks += [art1, art2, art4, art5]
+    }
+    
+    func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        filteredArts = artworks.filter({( artwork : ArtWork) -> Bool in
+            if artwork.name.lowercased().contains(searchText.lowercased()){
+                return artwork.name.lowercased().contains(searchText.lowercased())
+            }
+            if artwork.descriptionT.lowercased().contains(searchText.lowercased()){
+                return artwork.descriptionT.lowercased().contains(searchText.lowercased())
+            }
+            if artwork.genre.lowercased().contains(searchText.lowercased()){
+                return artwork.genre.lowercased().contains(searchText.lowercased())
+            }
+            if artwork.year.lowercased().contains(searchText.lowercased()){
+                return artwork.year.lowercased().contains(searchText.lowercased())
+            }
+            return false
+        })
+        
+        tableView.reloadData()
+    }
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+}
+
+@available(iOS 11.0, *)
+extension ArtWorkTableViewController: UISearchResultsUpdating {
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
     }
 }
