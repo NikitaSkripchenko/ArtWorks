@@ -8,7 +8,12 @@ class ArtWorkTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem
-        loadSample()
+        if let savedItems = loadArt(){
+            artworks += savedItems
+        }
+        else {
+            loadSample()
+        }
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -46,7 +51,7 @@ class ArtWorkTableViewController: UITableViewController {
         
         cell.nameLabel.text = art.name
         cell.yearLabel.text = art.year
-        cell.descLabel.text = art.description
+        cell.descLabel.text = art.descriptionT
         cell.genreLabel.text = art.genre
         cell.imgLabel.image = art.image
         return cell
@@ -69,9 +74,10 @@ class ArtWorkTableViewController: UITableViewController {
             // Delete the row from the data source
             artworks.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            saveArt()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
 
 
@@ -117,7 +123,7 @@ class ArtWorkTableViewController: UITableViewController {
             let selectedArtWork = artworks[indexPath.row]
             artWorkDetailViewController.artWork = selectedArtWork
         default:
-           fatalError("Unexpected Segue Identifier; \(segue.identifier)")
+            fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
         }
     }
  
@@ -133,24 +139,38 @@ class ArtWorkTableViewController: UITableViewController {
                 artworks.append(artwork)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
+            saveArt()
         }
+    }
+    //MARK: Private methods
+    private func saveArt(){
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(artworks, toFile: ArtWork.ArchiveURL.path)
+        if isSuccessfulSave {
+            os_log("Saved.", log: OSLog.default, type: .debug)
+        } else {
+            os_log("Failed", log: OSLog.default, type: .error)
+        }
+    }
+    
+    private func loadArt() -> [ArtWork]?{
+        return NSKeyedUnarchiver.unarchiveObject(withFile: ArtWork.ArchiveURL.path) as? [ArtWork]
     }
     
     private func loadSample(){
         let photo1 = UIImage(named: "scream")
-        guard let art1 = ArtWork(name: "Крик", description: "Эдвард Мунк", genre: "Импрессионизм", year: "1893", image: photo1) else {
+        guard let art1 = ArtWork(name: "Крик", descriptionT: "Эдвард Мунк", genre: "Импрессионизм", year: "1893", image: photo1) else {
             fatalError("Unable to instantiate art")
         }
         let photo2 = UIImage(named: "blackSquare")
-        guard let art2 = ArtWork(name: "Чёрный квадрат", description: "Каземир Малевич", genre: "Аванд Гард", year: "1915", image: photo2) else {
+        guard let art2 = ArtWork(name: "Чёрный квадрат", descriptionT: "Каземир Малевич", genre: "Аванд Гард", year: "1915", image: photo2) else {
             fatalError("Unable to instantiate art")
         }
         let photo4 = UIImage(named: "starryNight")
-        guard let art4 = ArtWork(name: "Звёздная ночь", description: "Ван Гог", genre: "Сюрреализм", year: "1889", image: photo4) else {
+        guard let art4 = ArtWork(name: "Звёздная ночь", descriptionT: "Ван Гог", genre: "Сюрреализм", year: "1889", image: photo4) else {
             fatalError("Unable to instantiate art")
         }
         let photo5 = UIImage(named: "time")
-        guard let art5 = ArtWork(name: "Постоянство времени", description: "Сальвадор Дали", genre: "Сюрреализм", year: "1931", image: photo5) else {
+        guard let art5 = ArtWork(name: "Постоянство времени", descriptionT: "Сальвадор Дали", genre: "Сюрреализм", year: "1931", image: photo5) else {
             fatalError("Unable to instantiate art")
         }
         artworks += [art1, art2, art4, art5]

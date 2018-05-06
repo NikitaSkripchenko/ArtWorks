@@ -16,7 +16,7 @@
 		936B4B841DB54E8F0090E3EE /* ArtWorkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936B4B831DB54E8F0090E3EE /* ArtWorkViewController.swift */; };
 		936B4B891DB54E8F0090E3EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 936B4B881DB54E8F0090E3EE /* Assets.xcassets */; };
 		936B4B8C1DB54E8F0090E3EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 936B4B8A1DB54E8F0090E3EE /* LaunchScreen.storyboard */; };
-		936B4B971DB54E8F0090E3EE /* FoodTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936B4B961DB54E8F0090E3EE /* FoodTrackerTests.swift */; };
+		936B4B971DB54E8F0090E3EE /* ArtWorksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936B4B961DB54E8F0090E3EE /* ArtWorksTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +42,7 @@
 		936B4B8B1DB54E8F0090E3EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		936B4B8D1DB54E8F0090E3EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		936B4B921DB54E8F0090E3EE /* ArtWorksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArtWorksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		936B4B961DB54E8F0090E3EE /* FoodTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTrackerTests.swift; sourceTree = "<group>"; };
+		936B4B961DB54E8F0090E3EE /* ArtWorksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtWorksTests.swift; sourceTree = "<group>"; };
 		936B4B981DB54E8F0090E3EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,7 +102,7 @@
 		936B4B951DB54E8F0090E3EE /* ArtWorksTests */ = {
 			isa = PBXGroup;
 			children = (
-				936B4B961DB54E8F0090E3EE /* FoodTrackerTests.swift */,
+				936B4B961DB54E8F0090E3EE /* ArtWorksTests.swift */,
 				936B4B981DB54E8F0090E3EE /* Info.plist */,
 			);
 			path = ArtWorksTests;
@@ -224,7 +224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				936B4B971DB54E8F0090E3EE /* FoodTrackerTests.swift in Sources */,
+				936B4B971DB54E8F0090E3EE /* ArtWorksTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

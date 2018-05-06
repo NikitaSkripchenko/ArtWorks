@@ -42,7 +42,7 @@ class ArtWorkViewController: UIViewController, UITextFieldDelegate, UIImagePicke
             nameTextField.text = artWork.name
             text.text = artWork.year
             genreText.text = artWork.genre
-            descrText.text = artWork.description
+            descrText.text = artWork.descriptionT
             photoImageView.image = artWork.image
         
         }
@@ -134,12 +134,12 @@ class ArtWorkViewController: UIViewController, UITextFieldDelegate, UIImagePicke
             return
         }
         let name = nameTextField.text ?? ""
-        let description = descrText.text ?? ""
+        let descriptionT = descrText.text ?? ""
         let genre = genreText.text ?? ""
         let year = text.text ?? ""
         let image = photoImageView.image
 
-    artWork = ArtWork(name: name, description: description, genre: genre, year: year, image: image)
+    artWork = ArtWork(name: name, descriptionT:descriptionT, genre: genre, year: year, image: image)
     }
     
     //MARK: Actions
