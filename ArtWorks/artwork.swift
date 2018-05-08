@@ -47,12 +47,10 @@ class ArtWork: NSObject, NSCoding {
             return nil
         }
         
-        // Because photo is an optional property of Meal, just use conditional cast.
         let image = aDecoder.decodeObject(forKey: PropertyKey.image) as? UIImage
         let descriptionT = aDecoder.decodeObject(forKey: PropertyKey.descriptionT) as? String
         let genre = aDecoder.decodeObject(forKey: PropertyKey.genre) as? String
         let year = aDecoder.decodeObject(forKey: PropertyKey.year) as? String
-        
         
         // Must call designated initializer.
         self.init(name: name, descriptionT: descriptionT!, genre: genre!, year: year!, image: image)

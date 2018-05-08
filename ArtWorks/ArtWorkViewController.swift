@@ -30,7 +30,7 @@ class ArtWorkViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     }
     //MARK: Vars
     var years : [String] = []
-    var genres = [ "Avant-garde", "Cartooning", "Digital art‎","Erotic art‎", "Figurative art‎", "Folk art‎", "Kaiju", "Marine art", "Naïve art", "Political art", "Portrait art", "Religious art", "Street art", "Still live"]
+    var genres = [ "Ампир", "Ар бюрт", "Барокко","Баухаус", "Кубизм‎", "Минимализм", "Модернизм", "Метамодернизм", "Неоромантизм", "Романтизм", "Символизм", "Постмодернизм", "Экспрессионизм‎"]
     var artWork: ArtWork?
     
     override func viewDidLoad() {
